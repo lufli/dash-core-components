@@ -5,6 +5,7 @@ import io
 import os
 import sys
 import time
+import json
 import pandas as pd
 
 import dash
@@ -12,7 +13,6 @@ from dash.dependencies import Input, Output, State
 import dash_html_components as html
 import dash_core_components as dcc
 import dash_table_experiments as dt
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import InvalidElementStateException
 
@@ -708,6 +708,7 @@ class Tests(IntegrationTests):
         end_date.click()
 
         self.assertEquals(date_content.text, '1997-05-03 - 1997-05-04')
+
     def test_interval(self):
         app = dash.Dash(__name__)
         app.layout = html.Div([
@@ -792,3 +793,60 @@ class Tests(IntegrationTests):
         ])
 
         self._test_confirm(app, 'ConfirmDialogProvider')
+
+    def test_storage_component(self):
+        app = dash.Dash(__name__)
+
+        getter = 'return window.sessionStorage.getItem("{}");'
+        clicked_getter = getter.format('storage')
+        dummy_getter = getter.format('dummy')
+        dummy_data = 'Hello world'
+
+        app.layout = html.Div([
+            dcc.Storage(id='storage',
+                        storage_type='session'),
+            html.Button('click me', id='btn'),
+            html.Button('clear', id='clear-btn'),
+            dcc.Storage(id='dummy',
+                        storage_type='session',
+                        data=dummy_data)
+        ])
+
+        @app.callback(Output('storage', 'data'),
+                      [Input('btn', 'n_clicks')],
+                      [State('storage', 'data')])
+        def on_click(n_clicks, storage):
+            if n_clicks is None:
+                return
+            storage = storage or {}
+            return {'clicked': storage.get('clicked', 0) + 1}
+
+        @app.callback(Output('storage', 'clear_data'),
+                      [Input('clear-btn', 'n_clicks')])
+        def on_clear(n_clicks):
+            if n_clicks is None:
+                return
+            return True
+
+        self.startServer(app)
+
+        time.sleep(1)
+
+        dummy = self.driver.execute_script(dummy_getter)
+        self.assertEqual(dummy_data, dummy)
+
+        click_btn = self.wait_for_element_by_css_selector('#btn')
+        clear_btn = self.wait_for_element_by_css_selector('#clear-btn')
+
+        for i in range(10):
+            click_btn.click()
+            time.sleep(0.5)
+
+            click_data = json.loads(self.driver.execute_script(clicked_getter))
+            self.assertEqual(i+1, click_data.get('clicked'))
+
+        clear_btn.click()
+        time.sleep(0.5)
+
+        cleared_data = self.driver.execute_script(clicked_getter)
+        self.assertTrue(cleared_data is None)
