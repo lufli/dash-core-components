@@ -24,6 +24,6 @@ export default class Card extends Component {
 }
 
 Card.propTypes = {
-  header: PropTypes.node,
+  header: PropTypes.string,
   bodyStyle: PropTypes.object
 };
