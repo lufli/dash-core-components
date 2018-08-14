@@ -8,7 +8,7 @@ class Card(Component):
 
 
 Keyword arguments:
-- header (a list of or a singular dash component, string or number; optional)
+- header (string; optional)
 - bodyStyle (dict; optional)
 
 Available events: """

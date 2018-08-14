@@ -57,7 +57,8 @@ _css_dist = [
             'react-select@1.0.0-rc.3.min.css',
             'react-virtualized@9.9.0.css',
             'react-virtualized-select@3.1.0.css',
-            'react-dates@12.3.0.css'
+            'react-dates@12.3.0.css',
+            'card.css'
         ],
         'external_url': [
             'https://unpkg.com/react-select@1.0.0-rc.3/dist/react-select.min.css',
