@@ -1,3 +1,4 @@
+from .Card import Card
 from .Checklist import Checklist
 from .ConfirmDialog import ConfirmDialog
 from .ConfirmDialogProvider import ConfirmDialogProvider
@@ -21,6 +22,7 @@ from .Upload import Upload
 
 
 __all__ = [
+    "Card",
     "Checklist",
     "ConfirmDialog",
     "ConfirmDialogProvider",

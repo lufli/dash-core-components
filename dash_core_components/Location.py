@@ -5,7 +5,7 @@ from dash.development.base_component import Component, _explicitize_args
 
 class Location(Component):
     """A Location component.
-Update and track the current window.location object through the window.history state.
+Update and track the current window.location object through the window.history state.
 Use in conjunction with the `dash_core_components.Link` component to make apps with multiple pages.
 
 Keyword arguments:
@@ -32,7 +32,7 @@ Available events: """
         _locals.update(kwargs)  # For wildcard attrs
         args = {k: _locals[k] for k in _explicit_args if k != 'children'}
 
-        for k in ['id']:
+        for k in [u'id']:
             if k not in args:
                 raise TypeError(
                     'Required argument `' + k + '` was not specified.')

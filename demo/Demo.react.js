@@ -12,7 +12,8 @@ import {
     SyntaxHighlighter,
     Interval,
     Markdown,
-    Upload
+    Upload,
+    Card
 } from '../src';
 
 
@@ -299,6 +300,27 @@ class Controller extends Component {
 ReactDOM.render(<Controller/>, mountNode);`
 
 
+const CardExample = `
+const properties = {
+    id: 'my card',
+    bodyStyle: {'height': '500px'},
+    header: 'My first component'
+};
+
+class MyCard extends Component {
+    constructor() {
+        super();
+        this.state = {};
+    }
+
+    render() {
+        return (<Card {...properties}
+        />)
+    }
+}
+
+ReactDOM.render(<MyCard/>, mountNode);
+`
 
 const examples = [
     {name: 'Upload', code: UploadExample},
@@ -311,7 +333,8 @@ const examples = [
     {name: 'Dropdown', code: DropdownExample},
     {name: 'Slider', code: SliderExample},
     {name: 'RangeSlider', code: RangeSliderExample},
-    {name: 'Input', code: InputExample}
+    {name: 'Input', code: InputExample},
+    {name: 'Card', code: CardExample}
 ];
 
 class Demo extends Component {
@@ -326,7 +349,7 @@ class Demo extends Component {
                             <h3>{example.name}</h3>
                             <Playground
                                 codeText={example.code}
-                                scope={{Component, React, ReactDOM, Checklist, Dropdown, Graph, Input, RadioItems, RangeSlider, Slider, SyntaxHighlighter, Interval, Markdown, Upload}}
+                                scope={{Component, React, ReactDOM, Checklist, Dropdown, Graph, Input, RadioItems, RangeSlider, Slider, SyntaxHighlighter, Interval, Markdown, Upload, Card}}
                                 noRender={false}
                                 theme={'xq-light'}
                             />

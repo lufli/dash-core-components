@@ -3,35 +3,23 @@
 from dash.development.base_component import Component, _explicitize_args
 
 
-class Checklist(Component):
-    """A Checklist component.
-Checklist is a component that encapsulates several checkboxes.
-The values and labels of the checklist is specified in the `options`
-property and the checked items are specified with the `values` property.
-Each checkbox is rendered as an input with a surrounding label.
+class Card(Component):
+    """A Card component.
+
 
 Keyword arguments:
-- id (string; optional)
-- options (list; optional): An array of options
-- values (list; optional): The currently selected value
-- className (string; optional): The class of the container (div)
-- style (dict; optional): The style of the container (div)
-- inputStyle (dict; optional): The style of the <input> checkbox element
-- inputClassName (string; optional): The class of the <input> checkbox element
-- labelStyle (dict; optional): The style of the <label> that wraps the checkbox input
- and the option's label
-- labelClassName (string; optional): The class of the <label> that wraps the checkbox input
- and the option's label
+- header (a list of or a singular dash component, string or number; optional)
+- bodyStyle (dict; optional)
 
-Available events: 'change'"""
+Available events: """
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, options=Component.UNDEFINED, values=Component.UNDEFINED, className=Component.UNDEFINED, style=Component.UNDEFINED, inputStyle=Component.UNDEFINED, inputClassName=Component.UNDEFINED, labelStyle=Component.UNDEFINED, labelClassName=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'options', 'values', 'className', 'style', 'inputStyle', 'inputClassName', 'labelStyle', 'labelClassName']
-        self._type = 'Checklist'
+    def __init__(self, header=Component.UNDEFINED, bodyStyle=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['header', 'bodyStyle']
+        self._type = 'Card'
         self._namespace = 'dash_core_components'
         self._valid_wildcard_attributes =            []
-        self.available_events = ['change']
-        self.available_properties = ['id', 'options', 'values', 'className', 'style', 'inputStyle', 'inputClassName', 'labelStyle', 'labelClassName']
+        self.available_events = []
+        self.available_properties = ['header', 'bodyStyle']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')
@@ -43,7 +31,7 @@ Available events: 'change'"""
             if k not in args:
                 raise TypeError(
                     'Required argument `' + k + '` was not specified.')
-        super(Checklist, self).__init__(**args)
+        super(Card, self).__init__(**args)
 
     def __repr__(self):
         if(any(getattr(self, c, None) is not None
@@ -61,9 +49,9 @@ Available events: 'change'"""
                                       if any([c.startswith(wc_attr)
                                       for wc_attr in
                                       self._valid_wildcard_attributes])])
-            return ('Checklist(' + props_string +
+            return ('Card(' + props_string +
                    (', ' + wilds_string if wilds_string != '' else '') + ')')
         else:
             return (
-                'Checklist(' +
+                'Card(' +
                 repr(getattr(self, self._prop_names[0], None)) + ')')
