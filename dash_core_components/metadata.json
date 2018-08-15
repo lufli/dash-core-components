@@ -1,4 +1,25 @@
 {
+  "src/components/Card.react.js": {
+    "description": "",
+    "displayName": "Card",
+    "methods": [],
+    "props": {
+      "header": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": ""
+      },
+      "bodyStyle": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": ""
+      }
+    }
+  },
   "src/components/Checklist.react.js": {
     "description": "Checklist is a component that encapsulates several checkboxes.\nThe values and labels of the checklist is specified in the `options`\nproperty and the checked items are specified with the `values` property.\nEach checkbox is rendered as an input with a surrounding label.",
     "displayName": "Checklist",
